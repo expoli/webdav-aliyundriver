@@ -46,11 +46,11 @@ public class AliYunDriverClient {
                 if (response.code() == 401 && response.body() != null  && response.body().string().contains("AccessToken")) {
                     String refreshTokenResult;
                     try {
-                        refreshTokenResult = post("https://websv.aliyundrive.com/token/refresh", Collections.singletonMap("refresh_token", readRefreshToken()));
+                        refreshTokenResult = post("https://api.aliyundrive.com/token/refresh", Collections.singletonMap("refresh_token", readRefreshToken()));
                     } catch (Exception e) {
                         // 如果置换token失败，先清空原token文件，再尝试一次
                         deleteRefreshTokenFile();
-                        refreshTokenResult = post("https://websv.aliyundrive.com/token/refresh", Collections.singletonMap("refresh_token", readRefreshToken()));
+                        refreshTokenResult = post("https://api.aliyundrive.com/token/refresh", Collections.singletonMap("refresh_token", readRefreshToken()));
                     }
                     String accessToken = (String) JsonUtil.getJsonNodeValue(refreshTokenResult, "access_token");
                     String refreshToken = (String) JsonUtil.getJsonNodeValue(refreshTokenResult, "refresh_token");
